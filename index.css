@@ -13,6 +13,16 @@
   --glass-hover: rgba(255, 255, 255, 0.12);
 }
 
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -272,5 +282,20 @@ section {
   .card-glass { padding: 1.5rem !important; }
 }
 
-.reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.animate-in { opacity: 1; transform: translateY(0); }
+.reveal-on-scroll { 
+  opacity: 0; 
+  transform: translate3d(0, 50px, -100px) rotateX(10deg); 
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
+  backface-visibility: hidden;
+}
+.animate-in { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg); }
+
+/* --- 3D Hover Layers --- */
+.bento-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(var(--primary-rgb), 0.15), transparent 40%);
+  z-index: 3;
+  pointer-events: none;
+}
