@@ -23,18 +23,26 @@
   pointer-events: none;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: 'Outfit', sans-serif;
   background-color: var(--background);
   color: var(--text);
-  overflow-x: hidden;
   line-height: 1.6;
-  perspective: 1200px;
-  transform-style: preserve-3d;
   height: auto;
-  min-height: 100vh;
+  position: relative;
 }
 
 #cursor {
@@ -63,6 +71,7 @@ body {
 .floating-3d-elements {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none; z-index: 1; transform-style: preserve-3d;
+  overflow: hidden;
 }
 
 .sphere {
@@ -197,6 +206,31 @@ section {
 .section-line { width: 100px; height: 5px; background: var(--primary); margin: 15px auto; border-radius: 10px; }
 .section-dark { background-color: #0b0f1a; }
 
+/* --- Experience & Text Visibility --- */
+.exp-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.exp-card h5 {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 600;
+}
+
+.exp-card ul li {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: 0.3s;
+}
+
+.exp-card ul li:hover {
+  color: #fff !important;
+  transform: translateX(10px);
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
 /* --- About --- */
 .about-card-3d { perspective: 1000px; width: 100%; height: 500px; }
 .card-inner {
@@ -215,17 +249,86 @@ section {
 }
 
 /* --- Services --- */
-.service-icon { font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; transition: 0.4s; }
+.services-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-underline {
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  margin: 1rem auto 4rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px var(--primary);
+}
+
+.service-icon {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(var(--primary-rgb), 0.4));
+}
+
 .card-glass {
-  background: var(--glass); backdrop-filter: blur(15px);
-  border: 1px solid var(--glass-border); border-radius: 25px;
-  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
 }
+
+.card-glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 30px;
+  background: radial-gradient(circle at center, rgba(var(--primary-rgb), 0.1), transparent 70%);
+  opacity: 0;
+  transition: 0.5s;
+  z-index: -1;
+}
+
 .card-glass:hover { 
-  background: var(--glass-hover); transform: translateY(-10px) scale(1.02);
-  border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-20px) scale(1.02);
+  border-color: rgba(var(--primary-rgb), 0.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 20px rgba(var(--primary-rgb), 0.2);
 }
-.service-card-glass:hover .service-icon { transform: scale(1.2) rotate(15deg); color: var(--secondary); }
+
+.card-glass:hover::before {
+  opacity: 1;
+}
+
+.service-card-glass:hover .service-icon { 
+  transform: scale(1.2) translateY(-10px); 
+  filter: drop-shadow(0 0 20px rgba(var(--primary-rgb), 0.6));
+}
+
+.service-card-glass {
+  padding: 4rem 2.5rem !important;
+}
+
+.service-card-glass h4 {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.service-card-glass p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  margin-bottom: 0;
+}
 
 /* --- Skills Pills --- */
 .skill-pill {
@@ -360,4 +463,5 @@ section {
   border-top: 1px solid var(--glass-border);
   position: relative;
   z-index: 10;
+  margin-bottom: 0;
 }
