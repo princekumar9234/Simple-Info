@@ -62,7 +62,7 @@
               <span class="badge-premium mb-4">MERN Stack Expert</span>
               <h1 class="hero-title">Engineering <br><span class="gradient-text">Digital Futures</span></h1>
               <p class="hero-description mt-4">
-                I am Prince, a Full-Stack Developer specializing in building scalable, 3D-immersive web ecosystems. Transforming complex logic into beautiful, high-performing code.
+                <span class="typewriter">Building immersive web ecosystems for tomorrow.</span>
               </p>
               <div class="hero-btns mt-5 d-flex align-items-center">
                 <a href="#Contact" class="btn-primary-3d">Hire Me Now <div class="btn-shine"></div></a>
@@ -109,8 +109,8 @@
             </div>
             <div class="col-lg-7 px-lg-5">
               <h3 class="mb-4">Digital <span class="text-primary">Architect</span> & Problem Solver</h3>
-              <p class="fs-5 text-muted mb-4">
-                Currently pursuing my diploma in Computer Science at Govt. Polytechnic Aurangabad. I have a deep passion for DSA, MERN Stack, and immersive web technologies.
+              <p class="fs-5 text-muted mb-4 staggered-text">
+                Currently pursuing my diploma in Computer Science. I have a <span class="text-glow">deep passion</span> for <span class="highlight-gradient">MERN Stack</span> and immersive technologies.
               </p>
               <div class="row g-4 mt-2">
                 <div class="col-6">
@@ -444,6 +444,26 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
 
+      // --- Staggered Text Reveal Engine ---
+      document.querySelectorAll('.staggered-text').forEach(el => {
+        const text = el.innerText;
+        el.innerHTML = text.split(' ').map(word => `<span>${word}</span>`).join(' ');
+        
+        const observerStaggered = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.querySelectorAll('span').forEach((span, i) => {
+                setTimeout(() => {
+                  span.style.opacity = '1';
+                  span.style.transform = 'translateY(0)';
+                }, i * 100);
+              });
+            }
+          });
+        }, { threshold: 0.5 });
+        observerStaggered.observe(el);
+      });
+
       // --- Cursor Logic ---
       const cursor = document.getElementById('cursor');
       const cursorB = document.getElementById('cursor-blur');
@@ -516,8 +536,8 @@
       window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
         document.querySelectorAll('.sphere').forEach((s, i) => {
-          const speed = (i + 1) * 0.2;
-          s.style.transform = `translate3d(0, ${scrolled * speed}px, ${scrolled * 0.1}px)`;
+          const speed = (i + 1) * 0.1;
+          s.style.transform = `translate3d(0, ${-scrolled * speed}px, 0)`;
         });
       });
 
